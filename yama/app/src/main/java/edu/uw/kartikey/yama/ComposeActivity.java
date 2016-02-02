@@ -6,8 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,11 +37,6 @@ public class ComposeActivity extends AppCompatActivity {
 
         ImageButton imgButton = (ImageButton) findViewById(R.id.imageButton);
         Button send = (Button)findViewById(R.id.sendButton);
-
-
-
-
-
 
 
         send.setOnClickListener(new View.OnClickListener() {

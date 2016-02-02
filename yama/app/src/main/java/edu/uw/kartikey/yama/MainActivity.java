@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.composeItem:
                 startComposing();
                 return true;
+            case R.id.settingsItem:
+                startSettings();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -102,6 +105,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void startComposing () {
         Intent intent =  new Intent(MainActivity.this,ComposeActivity.class);
+        startActivity(intent);
+    }
+
+    public void startSettings () {
+        Intent intent =  new Intent(MainActivity.this,SettingsActivity.class);
         startActivity(intent);
     }
 

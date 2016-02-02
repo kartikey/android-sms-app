@@ -9,4 +9,9 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/settingsItem"
+        android:title="Settings"
+        />
+
 </menu>

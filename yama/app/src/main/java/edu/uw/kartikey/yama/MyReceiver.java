@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,6 +32,17 @@ public class MyReceiver extends BroadcastReceiver {
 //            Toast t = Toast.makeText(context, msg.getOriginatingAddress() + ": "+msg.getMessageBody(), Toast.LENGTH_LONG);
 //            t.show();
 
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+            Boolean autoReply = sharedPref.getBoolean("auto_reply_key", false);
+            String autoMessage = sharedPref.getString("message_key", "");
+
+            if(autoReply) {
+                Log.v("RECEIVER", "autoreply: "+autoReply.toString() + "send text "+autoMessage);
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(msg.getOriginatingAddress(), null, autoMessage, null, null);
+            }
+
 
 
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -47,10 +61,6 @@ public class MyReceiver extends BroadcastReceiver {
 
             mNotificationManager.notify(0,mBuilder.build());
 
-
-
         }
-
-
     }
 }
