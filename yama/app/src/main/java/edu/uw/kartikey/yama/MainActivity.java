@@ -9,10 +9,15 @@ package edu.uw.kartikey.yama;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
+        import android.view.View;
         import android.widget.CursorAdapter;
         import android.widget.ListView;
         import android.widget.SimpleCursorAdapter;
+        import android.widget.TextView;
 
+        import java.text.SimpleDateFormat;
+        import java.util.Calendar;
+        import java.util.Date;
         import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks {
@@ -32,6 +37,42 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int[] ids = new int[]{R.id.fromText,R.id.msgText,R.id.dateText};
 
         adapter = new SimpleCursorAdapter(this,R.layout.list_item,null,cols,ids, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+        adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int i) {
+
+                if (i == 1) {
+                    String text = cursor.getString(i);
+                    TextView textView = (TextView) view;
+                    textView.setText("From: " + text);
+                    return true;
+                }
+
+                if (i == 2) {
+                    String text = cursor.getString(i);
+                    TextView textView = (TextView) view;
+                    int length = text.length() > 10 ? 10:text.length();
+                    textView.setText("Message: " + text);
+                    //textView.setText("Message: " + text.substring(0,length)+"...");
+                    return true;
+                }
+
+                if (i == 3) {
+                    String createDate = cursor.getString(i);
+                    TextView textView = (TextView) view;
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(Long.parseLong(createDate));
+                    String date = sdf.format(calendar.getTime());
+
+                    textView.setText("Date: " + date);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         ListView lv = (ListView)findViewById(R.id.mainMessageList);
         lv.setAdapter(adapter);
