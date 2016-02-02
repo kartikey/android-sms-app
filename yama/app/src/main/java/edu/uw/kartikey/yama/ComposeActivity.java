@@ -13,6 +13,7 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -55,9 +56,11 @@ public class ComposeActivity extends AppCompatActivity {
                 String number = phoneNumber.getText().toString();
                 String text = messageText.getText().toString();
 
-                Log.v(TAG, "numenr: "+number + " text: "+text);
+                Log.v(TAG, "number: "+number + " text: "+text);
 
                 smsManager.sendTextMessage(number, null, text, pendingIntent, null);
+
+                Snackbar.make(findViewById(android.R.id.content),R.string.sms_sent,Snackbar.LENGTH_LONG).show();
 
                 phoneNumber.setText("");
                 messageText.setText("");
