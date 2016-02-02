@@ -19,6 +19,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ComposeActivity" android:parentActivityName="edu.uw.kartikey.yama.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uw.kartikey.yama.MainActivity" />
+
+            <!-- Non-functional (it seems) -->
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+
 
         <receiver android:name=".MyReceiver">
             <intent-filter>

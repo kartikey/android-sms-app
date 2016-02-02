@@ -1,5 +1,6 @@
 package edu.uw.kartikey.yama;
 
+        import android.content.Intent;
         import android.database.Cursor;
         import android.net.Uri;
         import android.provider.Telephony;
@@ -9,6 +10,9 @@ package edu.uw.kartikey.yama;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
+        import android.view.Menu;
+        import android.view.MenuInflater;
+        import android.view.MenuItem;
         import android.view.View;
         import android.widget.CursorAdapter;
         import android.widget.ListView;
@@ -77,6 +81,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView lv = (ListView)findViewById(R.id.mainMessageList);
         lv.setAdapter(adapter);
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.composeItem:
+                startComposing();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void startComposing () {
+        Intent intent =  new Intent(MainActivity.this,ComposeActivity.class);
+        startActivity(intent);
     }
 
     @Override

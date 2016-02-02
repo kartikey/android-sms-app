@@ -30,8 +30,19 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(number, null, text, null, null);
+                phoneNumber.clearComposingText();
+                messageText.clearComposingText();
             }
+
+
+
+
+
         });
+
+
+        SmsManager sm = SmsManager.getDefault();
+
 
 
 
