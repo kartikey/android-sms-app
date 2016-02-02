@@ -29,6 +29,8 @@ public class MyReceiver extends BroadcastReceiver {
 //            Toast t = Toast.makeText(context, msg.getOriginatingAddress() + ": "+msg.getMessageBody(), Toast.LENGTH_LONG);
 //            t.show();
 
+
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.ic_notification)
                     .setContentTitle("Message from " + msg.getOriginatingAddress())

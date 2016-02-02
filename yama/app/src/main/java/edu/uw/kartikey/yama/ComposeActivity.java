@@ -1,33 +1,42 @@
 package edu.uw.kartikey.yama;
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class ComposeActivity extends AppCompatActivity {
 
     static final int PICK_CONTACT_REQUEST = 1;
+    static final String TAG = "COMPOSE";
+    String SMS_SENT = "SMS_SENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
-        final EditText phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
-        final EditText messageText = (EditText) findViewById(R.id.messageText);
+
         ImageButton imgButton = (ImageButton) findViewById(R.id.imageButton);
         Button send = (Button)findViewById(R.id.sendButton);
 
-        final String number = phoneNumber.toString();
-        final String text = messageText.toString();
+
+
+
 
 
 
@@ -35,11 +44,27 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(number, null, text, null, null);
-                phoneNumber.clearComposingText();
-                messageText.clearComposingText();
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(ComposeActivity.this, 0,
+                        new Intent(SMS_SENT), 0);
+
+
+
+                EditText phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
+                EditText messageText = (EditText) findViewById(R.id.messageText);
+
+                String number = phoneNumber.getText().toString();
+                String text = messageText.getText().toString();
+
+                Log.v(TAG, "numenr: "+number + " text: "+text);
+
+                smsManager.sendTextMessage(number, null, text, pendingIntent, null);
+
+                phoneNumber.setText("");
+                messageText.setText("");
             }
         });
+
 
 
         imgButton.setOnClickListener(new View.OnClickListener() {
