@@ -133,18 +133,3 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 }
-    /*Cursor c = getContentResolver().query(uri, null, null, null, null);
-
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            String address = c.getString(c.getColumnIndexOrThrow("address"));
-            String subject = c.getString(c.getColumnIndexOrThrow("subject"));
-            String body = c.getString(c.getColumnIndexOrThrow("body"));
-            long date = c.getInt(c.getColumnIndexOrThrow("date"));
-            int type = c.getInt(c.getColumnIndexOrThrow("type"));
-
-            Log.v(TAG, address + ", " + subject + ", " + body + ", " + date + ", " + type);
-            c.moveToNext();
-        }
-
-        return null;*/

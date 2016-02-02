@@ -51,8 +51,6 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
