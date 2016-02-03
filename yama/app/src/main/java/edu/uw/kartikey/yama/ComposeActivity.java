@@ -43,27 +43,7 @@ public class ComposeActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SmsManager smsManager = SmsManager.getDefault();
-
-                PendingIntent pendingIntent = PendingIntent.getActivity(ComposeActivity.this, 0,
-                        new Intent(SMS_SENT), 0);
-
-
-
-                EditText phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
-                EditText messageText = (EditText) findViewById(R.id.messageText);
-
-                String number = phoneNumber.getText().toString();
-                String text = messageText.getText().toString();
-
-                Log.v(TAG, "number: "+number + " text: "+text);
-
-                smsManager.sendTextMessage(number, null, text, pendingIntent, null);
-
-                Snackbar.make(findViewById(android.R.id.content),R.string.sms_sent,Snackbar.LENGTH_LONG).show();
-
-                phoneNumber.setText("");
-                messageText.setText("");
+                sendMessageHelper();
             }
         });
 
@@ -78,6 +58,44 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public void sendMessageHelper() {
+        SmsManager smsManager = SmsManager.getDefault();
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ComposeActivity.this, 0,
+                new Intent(SMS_SENT), 0);
+
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                //alert user if message was sent or failed
+                if (getResultCode() == Activity.RESULT_OK) {
+                    Snackbar.make(findViewById(android.R.id.content), R.string.sms_sent, Snackbar.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ComposeActivity.this, "ERROR: SMS NOT SENT!", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new IntentFilter(SMS_SENT));
+
+
+
+        EditText phoneNumber = (EditText) findViewById(R.id.phoneNumberField);
+        EditText messageText = (EditText) findViewById(R.id.messageText);
+
+        String number = phoneNumber.getText().toString();
+        String text = messageText.getText().toString();
+
+        Log.v(TAG, "number: " + number + " text: " + text);
+
+        smsManager.sendTextMessage(number, null, text, pendingIntent, null);
+
+
+        phoneNumber.setText("");
+        messageText.setText("");
     }
 
     @Override
